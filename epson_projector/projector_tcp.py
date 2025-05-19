@@ -45,7 +45,7 @@ class ProjectorTcp:
         try:
             with async_timeout.timeout(10):
                 self._reader, self._writer = await asyncio.open_connection(
-                    host=self._host, port=self._port, loop=self._loop
+                    host=self._host, port=self._port
                 )
                 self._writer.write(ESCVPNET_HELLO_COMMAND.encode())
                 response = await self._reader.read(16)
@@ -113,7 +113,7 @@ class ProjectorTcp:
                     power_on = await self.get_property(POWER, get_timeout(POWER))
                     if power_on == EPSON_CODES[POWER]:
                         reader, writer = await asyncio.open_connection(
-                            host=self._host, port=TCP_SERIAL_PORT, loop=self._loop
+                            host=self._host, port=TCP_SERIAL_PORT
                         )
                         _LOGGER.debug("Asking for serial number.")
                         writer.write(SERIAL_BYTE)
